@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".authentication.LoginActivity"
-    android:padding="10dp">
+    android:padding="10dp"
+
+    android:fitsSystemWindows="true">
 
 
     <TextView
