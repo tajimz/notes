@@ -12,7 +12,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.tajim.notes.MainActivity;
 import com.tajim.notes.R;
+import com.tajim.notes.authentication.LoginActivity;
 import com.tajim.notes.utils.BaseActivity;
+import com.tajim.notes.utils.CONSTANTS;
 
 public class SplashActivity extends BaseActivity {
 
@@ -27,7 +29,12 @@ public class SplashActivity extends BaseActivity {
 
     private void endSplash(int delayTimeInMS){
         delayTime(delayTimeInMS, ()->{
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            if (getSharedPref(CONSTANTS.EMAIL) != null){
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            }else {
+                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+            }
+
             finish();
         });
     }
