@@ -13,6 +13,15 @@
         android:theme="@style/Theme.Notes">
         <activity
             android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".authentication.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".authentication.SignupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".others.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
