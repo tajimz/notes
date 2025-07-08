@@ -3,8 +3,6 @@ package com.tajim.notes.authentication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
-
-import androidx.appcompat.app.AppCompatActivity;
 import com.tajim.notes.databinding.ActivitySignupBinding;
 import com.tajim.notes.utils.BaseActivity;
 import com.tajim.notes.utils.CONSTANTS;
@@ -30,25 +28,14 @@ public class SignupActivity extends BaseActivity {
             String email = binding.edEmail.getText().toString().trim();
             String password = binding.edPassword.getText().toString().trim();
 
-            if (email.isEmpty() || password.isEmpty()){
-                alert("Input Required", "Please fill in all the required fields.");
-                return;
-            }
-            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                alert("Invalid Email", "The Email you've entered is invalid, please enter a valid Email");
-                return;
-            }
-            if (!isPassword(password)){
-                alert("Invalid Password", CONSTANTS.PASSWORD_CRITERIA);
-                return;
-            }
+            if (!isValidInput(email, password)) return;
 
             JSONObject jsonObject = jsonObjMaker(
                     CONSTANTS.EMAIL , email,
                     CONSTANTS.PASSWORD, password
             );
 
-            reqJsonObj(CONSTANTS.URL + "authentication/signUp.php", jsonObject, new jsonObjCallBack() {
+            reqJsonObj(CONSTANTS.URL + CONSTANTS.SIGNUP_URL, jsonObject, new jsonObjCallBack() {
                 @Override
                 public void onSuccess(JSONObject result) {
 
@@ -59,5 +46,21 @@ public class SignupActivity extends BaseActivity {
 
 
         });
+    }
+
+    private boolean isValidInput(String email, String password){
+        if (email.isEmpty() || password.isEmpty()){
+            alert("Input Required", "Please fill in all the required fields.");
+            return false;
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            alert("Invalid Email", "The Email you've entered is invalid, please enter a valid Email");
+            return false;
+        }
+        if (!isPassword(password)){
+            alert("Invalid Password", CONSTANTS.PASSWORD_CRITERIA);
+            return false;
+        }
+        return true;
     }
 }

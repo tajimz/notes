@@ -2,14 +2,6 @@ package com.tajim.notes.others;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
 import com.tajim.notes.MainActivity;
 import com.tajim.notes.R;
 import com.tajim.notes.authentication.LoginActivity;
