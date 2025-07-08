@@ -65,13 +65,34 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <com.google.android.material.button.MaterialButton
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edLayHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toBottomOf="@+id/edLayPassword"
+
+            android:hint="password hint"
+            app:passwordToggleEnabled="true"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:id="@+id/edHint"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+        <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
 
-        app:layout_constraintTop_toBottomOf="@+id/edLayPassword"
+        app:layout_constraintTop_toBottomOf="@+id/edLayHint"
 
         android:text="Sign Up"
         app:cornerRadius="5dp"
