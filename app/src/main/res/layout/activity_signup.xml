@@ -111,6 +111,15 @@
         app:layout_constraintEnd_toEndOf="parent"
 
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="*The password cannot be reset. You can request for the hint in the future, which will be sent to your email."
+
+            app:layout_constraintTop_toBottomOf="@id/btnSubmit"/>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
