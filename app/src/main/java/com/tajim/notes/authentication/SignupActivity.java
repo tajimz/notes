@@ -46,7 +46,7 @@ public class SignupActivity extends BaseActivity {
                     try {
                         String status = result.getString("status");
                         if (status.equals("success")) accountCreated(email, password, hint);
-                        else alert("Alert", status);
+                        else alert("Alert", status, ()->{});
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -63,15 +63,15 @@ public class SignupActivity extends BaseActivity {
 
     private boolean isValidInput(String email, String password, String hint){
         if (email.isEmpty() || password.isEmpty() || hint.isEmpty()){
-            alert("Input Required", "Please fill in all the required fields.");
+            alert("Input Required", "Please fill in all the required fields.", ()->{});
             return false;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            alert("Invalid Email", "The Email you've entered is invalid, please enter a valid Email");
+            alert("Invalid Email", "The Email you've entered is invalid, please enter a valid Email", ()->{});
             return false;
         }
         if (!isPassword(password)){
-            alert("Invalid Password", CONSTANTS.PASSWORD_CRITERIA);
+            alert("Invalid Password", CONSTANTS.PASSWORD_CRITERIA, ()->{});
             return false;
         }
         return true;

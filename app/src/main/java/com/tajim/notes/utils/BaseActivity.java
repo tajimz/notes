@@ -53,7 +53,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError volleyError) {
                 endLoading();
                 Log.e("volleyError", volleyError.toString());
-                alert("Internet Connection Error", "Maybe you're offline or using a weak connection");
+                alert("Internet Connection Error", "Maybe you're offline or using a weak connection", ()->{});
 
 
             }
@@ -78,7 +78,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError volleyError) {
                 endLoading();
                 Log.e("volleyError", volleyError.toString());
-                alert("Internet Connection Error", "Maybe you're offline or using a weak connection");
+                alert("Internet Connection Error", "Maybe you're offline or using a weak connection", ()->{});
             }
         });
         requestQueue.add(jsonArrayRequest);
@@ -107,11 +107,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-    protected void alert(String title, String body) {
+    protected void alert(String title, String body, Runnable runnable) {
         new AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMessage(body)
-                .setNegativeButton("Okay", (dialog, which) -> {})
+                .setNegativeButton("Okay", (dialog, which) -> {runnable.run();})
                 .show();
     }
 
