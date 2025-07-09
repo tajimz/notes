@@ -20,6 +20,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public abstract class BaseActivity extends AppCompatActivity {
 
 
@@ -149,6 +153,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected boolean isPassword(String password){
         return password.length() >= 8 && password.length() <= 16 ;
+    }
+
+    public static String getDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy , HH:mm", Locale.getDefault());
+        return sdf.format(new Date());
     }
 
 
