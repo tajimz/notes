@@ -1,7 +1,10 @@
 package com.tajim.notes.notes;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import com.tajim.notes.MainActivity;
 import com.tajim.notes.databinding.ActivityAddNoteBinding;
 import com.tajim.notes.utils.BaseActivity;
 import com.tajim.notes.utils.CONSTANTS;
@@ -64,7 +67,7 @@ public class AddNoteActivity extends BaseActivity {
                 try {
                     String status = result.getString("status");
 
-                    if (status.equals("success")) addedNote();
+                    if (status.equals("success")) addedNote(result.getString("noteId"));
                     else alert("Notice", status, ()->{});
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
@@ -74,8 +77,13 @@ public class AddNoteActivity extends BaseActivity {
 
     }
 
-    private void addedNote(){
-        alert("Note Added", "note has added to server", ()->{});
+
+    private void addedNote(String noteId){
+
+        startActivity(new Intent(AddNoteActivity.this, MainActivity.class));
+        finish();
+        Toast.makeText(this, "added successfully", Toast.LENGTH_SHORT).show();
+
     }
 
 }
