@@ -3,13 +3,10 @@ package com.tajim.notes.authentication;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.Toast;
-
 import com.tajim.notes.MainActivity;
 import com.tajim.notes.databinding.ActivityLoginBinding;
 import com.tajim.notes.utils.BaseActivity;
 import com.tajim.notes.utils.CONSTANTS;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,6 +50,7 @@ public class LoginActivity extends BaseActivity {
                         String status = result.getString("status");
                         if (status.equals("success")) loginSuccess(email, password);
                         else alert("Alert", status,  ()->{});
+
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }

@@ -1,9 +1,7 @@
 package com.tajim.notes.adapters;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -29,6 +27,7 @@ public class RecyclerAdapterMain extends RecyclerView.Adapter<RecyclerAdapterMai
     @NonNull
     @Override
     public ViewHolderMain onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         LayoutRecyclerMainBinding binding = LayoutRecyclerMainBinding.inflate(inflater, parent, false);
 
@@ -38,6 +37,7 @@ public class RecyclerAdapterMain extends RecyclerView.Adapter<RecyclerAdapterMai
     @Override
     public void onBindViewHolder(@NonNull ViewHolderMain holder, int position) {
         cursor.moveToPosition(position);
+
         String title = cursor.getString(1);
         String body = cursor.getString(2);
         String date = cursor.getString(3);

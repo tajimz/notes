@@ -1,10 +1,7 @@
 package com.tajim.notes;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,15 +20,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        sqliteHelper = new SqliteHelper(this);
-        recyclerAdapterMain = new RecyclerAdapterMain(sqliteHelper);
+        initVars();
+        setupRecycler();
 
         binding.addNotes.setOnClickListener(v->{startActivity(new Intent(MainActivity.this, AddNoteActivity.class));});
 
-        binding.recyclerMain.setAdapter(recyclerAdapterMain);
-        binding.recyclerMain.setLayoutManager(new LinearLayoutManager(this));
 
     }
+
+    private void initVars(){
+        sqliteHelper = new SqliteHelper(this);
+        recyclerAdapterMain = new RecyclerAdapterMain(sqliteHelper);
+    }
+    private void setupRecycler(){
+        binding.recyclerMain.setAdapter(recyclerAdapterMain);
+        binding.recyclerMain.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+
+
 
 
 

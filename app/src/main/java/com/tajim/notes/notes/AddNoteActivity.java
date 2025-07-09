@@ -3,13 +3,11 @@ package com.tajim.notes.notes;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
-
 import com.tajim.notes.MainActivity;
 import com.tajim.notes.databinding.ActivityAddNoteBinding;
 import com.tajim.notes.others.SqliteHelper;
 import com.tajim.notes.utils.BaseActivity;
 import com.tajim.notes.utils.CONSTANTS;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,10 +33,6 @@ public class AddNoteActivity extends BaseActivity {
             String email = getSharedPref(CONSTANTS.EMAIL);
 
             createNote(title, body, email, getDate());
-
-
-
-
 
 
         });

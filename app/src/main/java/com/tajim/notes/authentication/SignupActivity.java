@@ -44,9 +44,11 @@ public class SignupActivity extends BaseActivity {
                 @Override
                 public void onSuccess(JSONObject result) {
                     try {
+
                         String status = result.getString("status");
                         if (status.equals("success")) accountCreated(email, password, hint);
                         else alert("Alert", status, ()->{});
+
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
