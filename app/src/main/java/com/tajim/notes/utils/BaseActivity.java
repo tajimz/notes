@@ -155,7 +155,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         return password.length() >= 8 && password.length() <= 16 ;
     }
 
-    public static String getDate() {
+    protected static String getDate() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy , HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }

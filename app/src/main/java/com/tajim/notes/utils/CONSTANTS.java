@@ -3,11 +3,15 @@ package com.tajim.notes.utils;
 public class CONSTANTS {
 
     public static final String EMAIL = "email";
+    public static final String DATE = "date";
+    public static final String TITLE = "title";
+    public static final String BODY = "body";
     public static final String PASSWORD = "password";
     public static final String HINT = "hint";
     public static final String SHAREDPREF = "shared_pref_notes";
     public static final String URL = "https://trtajim.xyz/apps/notes/";
     public static final String LOGIN_URL = "authentication/login.php";
     public static final String SIGNUP_URL = "authentication/signUp.php";
+    public static final String ADDNOTE_URL = "notes/addNote.php";
     public static final String PASSWORD_CRITERIA = "Password must be between 8 and 16 characters.";
 }
