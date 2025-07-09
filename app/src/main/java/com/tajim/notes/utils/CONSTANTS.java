@@ -16,4 +16,5 @@ public class CONSTANTS {
     public static final String PASSWORD_CRITERIA = "Password must be between 8 and 16 characters.";
     public static final String DBNAME = "tajimNotes_SQlite";
     public static final int DBVERSION = 1;
+    public static final String NOTESTABLE = "notes_table";
 }
