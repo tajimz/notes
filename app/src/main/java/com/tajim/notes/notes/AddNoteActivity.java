@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.tajim.notes.MainActivity;
 import com.tajim.notes.databinding.ActivityAddNoteBinding;
+import com.tajim.notes.others.SqliteHelper;
 import com.tajim.notes.utils.BaseActivity;
 import com.tajim.notes.utils.CONSTANTS;
 
@@ -67,7 +68,7 @@ public class AddNoteActivity extends BaseActivity {
                 try {
                     String status = result.getString("status");
 
-                    if (status.equals("success")) addedNote(result.getString("noteId"));
+                    if (status.equals("success")) addedNote(title, body, date ,result.getString("noteId"));
                     else alert("Notice", status, ()->{});
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
@@ -78,11 +79,13 @@ public class AddNoteActivity extends BaseActivity {
     }
 
 
-    private void addedNote(String noteId){
+    private void addedNote(String title, String body, String date, String noteId){
 
+        SqliteHelper sqliteHelper = new SqliteHelper(this);
+        sqliteHelper.insertData(title, body, date, noteId);
         startActivity(new Intent(AddNoteActivity.this, MainActivity.class));
         finish();
-        Toast.makeText(this, "added successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Note has added successfully", Toast.LENGTH_SHORT).show();
 
     }
 

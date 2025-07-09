@@ -17,7 +17,7 @@ public class SqliteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("CREATE TABLE "+CONSTANTS.NOTESTABLE+" (id INTEGER PRIMARY KEY AUTOINCREMENT, noteTitle TEXT, noteBody TEXT, noteDate TEXT)");
+        db.execSQL("CREATE TABLE "+CONSTANTS.NOTESTABLE+" (id INTEGER PRIMARY KEY AUTOINCREMENT, noteTitle TEXT, noteBody TEXT, noteDate TEXT, noteId TEXT)");
     }
 
     @Override
@@ -26,13 +26,14 @@ public class SqliteHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insertData(String noteTitle, String noteBody, String noteDate){
+    public void insertData(String noteTitle, String noteBody, String noteDate, String noteId){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("noteTitle", noteTitle);
         contentValues.put("noteBody", noteBody);
         contentValues.put("noteDate", noteDate);
+        contentValues.put("noteId", noteId);
 
         sqLiteDatabase.insert(CONSTANTS.NOTESTABLE, null, contentValues);
 
