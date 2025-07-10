@@ -125,7 +125,7 @@ public class AddNoteActivity extends BaseActivity {
                 try {
                     String status = result.getString("status");
 
-                    if (status.equals("success")) finishNoteOperation(title, body, date ,result.getString("noteId"),false);
+                    if (status.equals("success")) finishNoteOperation(title, body, date ,id,false);
                     else alert("Notice", status, ()->{});
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
