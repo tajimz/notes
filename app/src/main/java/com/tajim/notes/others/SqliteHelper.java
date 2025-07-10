@@ -50,6 +50,19 @@ public class SqliteHelper extends SQLiteOpenHelper {
         db.delete(CONSTANTS.NOTESTABLE, null, null);
     }
 
+    public void updateData(String noteTitle, String noteBody, String noteDate, String noteId){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(CONSTANTS.DBTITLE, noteTitle);
+        contentValues.put(CONSTANTS.DBBODY, noteBody);
+        contentValues.put(CONSTANTS.DBDATE, noteDate);
+
+        // update table where noteId matches
+        sqLiteDatabase.update(CONSTANTS.NOTESTABLE, contentValues, "id = '" + noteId + "'", null);
+    }
+
+
 
 
 }

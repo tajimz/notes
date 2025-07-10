@@ -1,5 +1,7 @@
 package com.tajim.notes.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -7,14 +9,19 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.tajim.notes.MainActivity;
 import com.tajim.notes.databinding.LayoutRecyclerMainBinding;
+import com.tajim.notes.notes.AddNoteActivity;
 import com.tajim.notes.others.SqliteHelper;
+import com.tajim.notes.utils.CONSTANTS;
 
 public class RecyclerAdapterMain extends RecyclerView.Adapter<RecyclerAdapterMain.ViewHolderMain> {
     SqliteHelper sqliteHelper;
     Cursor cursor;
-    public RecyclerAdapterMain(SqliteHelper sqliteHelper){
+    Context context;
+    public RecyclerAdapterMain(Context context,SqliteHelper sqliteHelper){
         this.sqliteHelper = sqliteHelper;
+        this.context = context;
         cursor = sqliteHelper.getData();
     }
     public class ViewHolderMain extends RecyclerView.ViewHolder{
@@ -45,6 +52,16 @@ public class RecyclerAdapterMain extends RecyclerView.Adapter<RecyclerAdapterMai
 
         holder.binding.tvTitle.setText(title);
         holder.binding.tvBody.setText(date + " " + body);
+
+        holder.binding.mother.setOnClickListener(v->{
+            Intent intent = new Intent(context, AddNoteActivity.class);
+            intent.putExtra(CONSTANTS.REASON, CONSTANTS.EDITNOTE_URL);
+            intent.putExtra(CONSTANTS.TITLE, title);
+            intent.putExtra(CONSTANTS.BODY, body);
+            intent.putExtra(CONSTANTS.DATE, date);
+            intent.putExtra(CONSTANTS.DBID, id);
+            context.startActivity(intent);
+        });
 
 
     }

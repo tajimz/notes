@@ -21,8 +21,20 @@ public class AddNoteActivity extends BaseActivity {
         setContentView(binding.getRoot());
 
         binding.tvDate.setText(getDate());
-        handleSubmit();
+        checkReason();
 
+
+    }
+
+    private void checkReason(){
+        String reason = getIntent().getStringExtra(CONSTANTS.REASON);
+        if (CONSTANTS.ADDNOTE_URL.equals(reason)){
+            handleSubmit();
+        }else if(CONSTANTS.EDITNOTE_URL.equals(reason)){
+
+            handleEdit();
+
+        }
     }
     private void handleSubmit(){
         binding.btnSubmit.setOnClickListener(v->{
@@ -34,6 +46,28 @@ public class AddNoteActivity extends BaseActivity {
 
             createNote(title, body, email, getDate());
 
+
+        });
+    }
+
+    private void handleEdit(){
+        String title = getIntent().getStringExtra(CONSTANTS.TITLE);
+        String body = getIntent().getStringExtra(CONSTANTS.BODY);
+        String date = getIntent().getStringExtra(CONSTANTS.DATE);
+        String id = getIntent().getStringExtra(CONSTANTS.DBID);
+
+        binding.tvDate.setText("Last Modified: "+date);
+        binding.edTitle.setText(title);
+        binding.edBody.setText(body);
+        binding.btnSubmit.setText("Edit Note");
+
+        binding.btnSubmit.setOnClickListener(v->{
+            String editedTitle = binding.edTitle.getText().toString().trim();
+            String editedBody = binding.edBody.getText().toString().trim();
+            if (!isInputValid(editedTitle, editedBody)) return;
+            String email = getSharedPref(CONSTANTS.EMAIL);
+
+            editNote(editedTitle, editedBody, email, getDate(), id);
 
         });
     }
@@ -62,7 +96,7 @@ public class AddNoteActivity extends BaseActivity {
                 try {
                     String status = result.getString("status");
 
-                    if (status.equals("success")) addedNote(title, body, date ,result.getString("noteId"));
+                    if (status.equals("success")) finishNoteOperation(title, body, date ,result.getString("noteId"),true);
                     else alert("Notice", status, ()->{});
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
@@ -73,13 +107,45 @@ public class AddNoteActivity extends BaseActivity {
     }
 
 
-    private void addedNote(String title, String body, String date, String noteId){
+
+
+    private void editNote(String title, String body, String email, String date,String id){
+        JSONObject jsonObject = jsonObjMaker(
+                CONSTANTS.TITLE, title,
+                CONSTANTS.BODY, body,
+                CONSTANTS.EMAIL, email,
+                CONSTANTS.DATE, date,
+                CONSTANTS.DBID, id
+        );
+
+        reqJsonObj(CONSTANTS.URL + CONSTANTS.EDITNOTE_URL, jsonObject, new jsonObjCallBack() {
+            @Override
+            public void onSuccess(JSONObject result) {
+
+                try {
+                    String status = result.getString("status");
+
+                    if (status.equals("success")) finishNoteOperation(title, body, date ,result.getString("noteId"),false);
+                    else alert("Notice", status, ()->{});
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+    }
+
+
+
+    private void finishNoteOperation(String title, String body, String date, String noteId, Boolean created){
 
         SqliteHelper sqliteHelper = new SqliteHelper(this);
-        sqliteHelper.insertData(title, body, date, noteId);
+        if (created) sqliteHelper.insertData(title, body, date, noteId);
+        else sqliteHelper.updateData(title, body, date, noteId);
+
         startActivity(new Intent(AddNoteActivity.this, MainActivity.class));
         finish();
-        Toast.makeText(this, "Note has added successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Operation successful", Toast.LENGTH_SHORT).show();
 
     }
 

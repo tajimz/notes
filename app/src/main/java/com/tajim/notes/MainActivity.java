@@ -10,6 +10,7 @@ import com.tajim.notes.adapters.RecyclerAdapterMain;
 import com.tajim.notes.databinding.ActivityMainBinding;
 import com.tajim.notes.notes.AddNoteActivity;
 import com.tajim.notes.others.SqliteHelper;
+import com.tajim.notes.utils.CONSTANTS;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
@@ -23,14 +24,18 @@ public class MainActivity extends AppCompatActivity {
         initVars();
         setupRecycler();
 
-        binding.addNotes.setOnClickListener(v->{startActivity(new Intent(MainActivity.this, AddNoteActivity.class));});
+        binding.addNotes.setOnClickListener(v->{
+            Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
+            intent.putExtra(CONSTANTS.REASON, CONSTANTS.ADDNOTE_URL);
+            startActivity(intent);
+        });
 
 
     }
 
     private void initVars(){
         sqliteHelper = new SqliteHelper(this);
-        recyclerAdapterMain = new RecyclerAdapterMain(sqliteHelper);
+        recyclerAdapterMain = new RecyclerAdapterMain(MainActivity.this,sqliteHelper);
     }
     private void setupRecycler(){
         binding.recyclerMain.setAdapter(recyclerAdapterMain);
