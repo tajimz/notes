@@ -48,16 +48,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-
-                jsonCallBack.onSuccess(jsonObject);
                 endLoading();
+                jsonCallBack.onSuccess(jsonObject);
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                endLoading();
+
                 Log.e("volleyError", volleyError.toString());
-                alert("Internet Connection Error", "Maybe you're offline or using a weak connection", ()->{});
+                alert("Internet Connection Error", "Maybe you're offline or using a weak connection", ()->{endLoading();});
 
 
             }
@@ -73,16 +73,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, url, jsonArray, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-
-                jsonArrayCallBack.onSuccess(jsonArray);
                 endLoading();
+                jsonArrayCallBack.onSuccess(jsonArray);
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                endLoading();
+
                 Log.e("volleyError", volleyError.toString());
-                alert("Internet Connection Error", "Maybe you're offline or using a weak connection", ()->{});
+                alert("Internet Connection Error", "Maybe you're offline or using a weak connection", ()->{endLoading();});
             }
         });
         requestQueue.add(jsonArrayRequest);
