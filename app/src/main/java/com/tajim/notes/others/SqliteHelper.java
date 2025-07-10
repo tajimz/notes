@@ -30,10 +30,10 @@ public class SqliteHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put("noteTitle", noteTitle);
-        contentValues.put("noteBody", noteBody);
-        contentValues.put("noteDate", noteDate);
-        contentValues.put("noteId", noteId);
+        contentValues.put(CONSTANTS.DBTITLE, noteTitle);
+        contentValues.put(CONSTANTS.DBBODY, noteBody);
+        contentValues.put(CONSTANTS.DBDATE, noteDate);
+        contentValues.put(CONSTANTS.DBID, noteId);
 
         sqLiteDatabase.insert(CONSTANTS.NOTESTABLE, null, contentValues);
 

@@ -12,9 +12,14 @@ public class CONSTANTS {
     public static final String URL = "https://trtajim.xyz/apps/notes/";
     public static final String LOGIN_URL = "authentication/login.php";
     public static final String SIGNUP_URL = "authentication/signUp.php";
+    public static final String GET_EXISTING_NOTES = "notes/getNotes.php";
     public static final String ADDNOTE_URL = "notes/addNote.php";
     public static final String PASSWORD_CRITERIA = "Password must be between 8 and 16 characters.";
     public static final String DBNAME = "tajimNotes_SQlite";
     public static final int DBVERSION = 1;
     public static final String NOTESTABLE = "notes_table";
+    public static final String DBTITLE = "noteTitle";
+    public static final String DBBODY = "noteBody";
+    public static final String DBDATE = "noteDate";
+    public static final String DBID = "noteId";
 }
