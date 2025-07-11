@@ -23,7 +23,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void endSplash(int delayTimeInMS){
-        if (getSharedPref(CONSTANTS.EMAIL) != null ) syncData();
+        if (getSharedPref(CONSTANTS.EMAIL) != null ) syncData(()->{});
         delayTime(delayTimeInMS, () -> {
             if (getSharedPref(CONSTANTS.EMAIL) != null) {
                 startActivity(new Intent(SplashActivity.this, MainActivity.class));

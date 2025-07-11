@@ -164,7 +164,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-    protected void syncData(){
+    protected void syncData(Runnable runnable){
         SqliteHelper sqliteHelper = new SqliteHelper(this);
         JSONObject jsonObject = jsonObjMaker(CONSTANTS.LAST_MODIFIED, getSharedPref(CONSTANTS.LAST_MODIFIED),
                 CONSTANTS.EMAIL, getSharedPref(CONSTANTS.EMAIL));
@@ -207,6 +207,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         editSharedPref(CONSTANTS.LAST_MODIFIED, getDate());
                         Toast.makeText(getApplicationContext(), "data synced", Toast.LENGTH_SHORT).show();
+                        runnable.run();
                     });
 
                 }).start();
