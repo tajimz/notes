@@ -20,7 +20,7 @@ public class AddNoteActivity extends BaseActivity {
         binding = ActivityAddNoteBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.tvDate.setText(getDate());
+        binding.tvDate.setText(convertDate(getDate()));
         checkReason();
 
 
@@ -56,7 +56,7 @@ public class AddNoteActivity extends BaseActivity {
         String date = getIntent().getStringExtra(CONSTANTS.DATE);
         String id = getIntent().getStringExtra(CONSTANTS.DBID);
 
-        binding.tvDate.setText("Last Modified: "+date);
+        binding.tvDate.setText("Last Modified: "+convertDate(date));
         binding.edTitle.setText(title);
         binding.edBody.setText(body);
         binding.btnSubmit.setText("Edit Note");

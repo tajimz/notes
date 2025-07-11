@@ -1,5 +1,7 @@
 package com.tajim.notes.adapters;
 
+import static com.tajim.notes.utils.BaseActivity.convertDate;
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -51,7 +53,7 @@ public class RecyclerAdapterMain extends RecyclerView.Adapter<RecyclerAdapterMai
         String id = cursor.getString(4);
 
         holder.binding.tvTitle.setText(title);
-        holder.binding.tvBody.setText(date + " " + body);
+        holder.binding.tvBody.setText(convertDate(date) + " " + body);
 
         holder.binding.mother.setOnClickListener(v->{
             Intent intent = new Intent(context, AddNoteActivity.class);
