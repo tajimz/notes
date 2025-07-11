@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/export_pdf"
+        android:title="Export As .pdf"
+        />
+    <item
+        android:id="@+id/export_docx"
+        android:title="Export As .docx"
+        />
+    <item
+        android:id="@+id/export_txt"
+        android:title="Export As .txt"
+        />
+</menu>

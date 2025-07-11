@@ -2,26 +2,32 @@ package com.tajim.notes.notes;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 import com.tajim.notes.MainActivity;
+import com.tajim.notes.R;
 import com.tajim.notes.databinding.ActivityAddNoteBinding;
 import com.tajim.notes.others.SqliteHelper;
 import com.tajim.notes.utils.BaseActivity;
 import com.tajim.notes.utils.CONSTANTS;
+import com.tajim.notes.utils.NoteExporter;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class AddNoteActivity extends BaseActivity {
     ActivityAddNoteBinding binding;
+    private NoteExporter noteExporter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAddNoteBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        noteExporter = new NoteExporter(this);
         binding.tvDate.setText(convertDate(getDate()));
         checkReason();
+        setupPopup();
 
 
     }
@@ -149,5 +155,48 @@ public class AddNoteActivity extends BaseActivity {
         Toast.makeText(this, "Operation successful", Toast.LENGTH_SHORT).show();
 
     }
+    private void setupPopup(){
+        binding.imageMore.setOnClickListener(v->{
+
+        PopupMenu popupMenu = new PopupMenu(this, v);
+        popupMenu.getMenuInflater().inflate(R.menu.popup_addnote, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(item -> {
+
+
+
+            int itemId = item.getItemId();
+            if (itemId == R.id.export_pdf){
+
+                noteExporter.export(binding.edBody.getText().toString().trim(), "pdf", binding.edTitle.getText().toString().trim());
+
+                return true;
+            }else if (itemId == R.id.export_docx){
+
+                noteExporter.export(binding.edBody.getText().toString().trim(), "docx", binding.edTitle.getText().toString().trim());
+
+
+                return true;
+            }else if (itemId == R.id.export_txt){
+
+                noteExporter.export(binding.edBody.getText().toString().trim(), "txt", binding.edTitle.getText().toString().trim());
+
+                return true;
+            }
+            return false;
+        });
+        popupMenu.show();
+
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (noteExporter != null) {
+            noteExporter.handleActivityResult(requestCode, resultCode, data);
+        }
+    }
+
 
 }

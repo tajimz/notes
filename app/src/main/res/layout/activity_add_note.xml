@@ -17,10 +17,19 @@
 
         <TextView
             android:id="@+id/tvDate"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
 
             android:text="Note Date Goes Here"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imageMore"/>
+        <ImageView
+            android:id="@+id/imageMore"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/baseline_more"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
 
@@ -31,7 +40,7 @@
 
             android:hint="Notes Title"
 
-            app:layout_constraintTop_toBottomOf="@id/tvDate"
+            app:layout_constraintTop_toBottomOf="@id/imageMore"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edTitle"
