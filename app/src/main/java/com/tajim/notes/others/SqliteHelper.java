@@ -45,6 +45,12 @@ public class SqliteHelper extends SQLiteOpenHelper {
         return sqLiteDatabase.rawQuery("SELECT * FROM "+CONSTANTS.NOTESTABLE+ " ORDER BY id DESC", null);
 
     }
+    public Cursor getDataById (String id){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        return sqLiteDatabase.rawQuery("SELECT * FROM " + CONSTANTS.NOTESTABLE + " WHERE noteId LIKE '" + id + "' ORDER BY id DESC", null);
+
+
+    }
     public void clearData(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(CONSTANTS.NOTESTABLE, null, null);
