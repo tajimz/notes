@@ -65,8 +65,9 @@ public class SqliteHelper extends SQLiteOpenHelper {
         contentValues.put(CONSTANTS.DBDATE, noteDate);
 
         // update table where noteId matches
-        sqLiteDatabase.update(CONSTANTS.NOTESTABLE, contentValues, "id = '" + noteId + "'", null);
+        sqLiteDatabase.update(CONSTANTS.NOTESTABLE, contentValues, "noteId = '" + noteId + "'", null);
     }
+
 
 
 
