@@ -156,7 +156,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected static String getDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy , HH:mm", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         return sdf.format(new Date());
     }
 

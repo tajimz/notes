@@ -128,7 +128,7 @@ public class LoginActivity extends BaseActivity {
     private void loginSuccess(String email, String password){
         editSharedPref(CONSTANTS.EMAIL, email);
         editSharedPref(CONSTANTS.PASSWORD, password);
-
+        editSharedPref(CONSTANTS.LAST_MODIFIED, getDate());
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

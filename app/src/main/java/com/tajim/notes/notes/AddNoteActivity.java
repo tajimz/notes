@@ -142,6 +142,7 @@ public class AddNoteActivity extends BaseActivity {
         SqliteHelper sqliteHelper = new SqliteHelper(this);
         if (created) sqliteHelper.insertData(title, body, date, noteId);
         else sqliteHelper.updateData(title, body, date, noteId);
+        editSharedPref(CONSTANTS.LAST_MODIFIED, date);
 
         startActivity(new Intent(AddNoteActivity.this, MainActivity.class));
         finish();

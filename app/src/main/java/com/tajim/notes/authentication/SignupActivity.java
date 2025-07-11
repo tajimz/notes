@@ -83,6 +83,7 @@ public class SignupActivity extends BaseActivity {
         editSharedPref(CONSTANTS.EMAIL, email);
         editSharedPref(CONSTANTS.PASSWORD, password);
         editSharedPref(CONSTANTS.HINT, hint);
+        editSharedPref(CONSTANTS.LAST_MODIFIED, getDate());
 
         Intent intent = new Intent(SignupActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

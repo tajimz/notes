@@ -24,4 +24,5 @@ public class CONSTANTS {
     public static final String DBDATE = "noteDate";
     public static final String DBID = "noteId";
     public static final String REASON = "reason";
+    public static final String LAST_MODIFIED = "lastModified";
 }
