@@ -1,9 +1,11 @@
 package com.tajim.notes.utils;
 
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.tajim.notes.others.SqliteHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -159,6 +162,58 @@ public abstract class BaseActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         return sdf.format(new Date());
     }
+
+
+    protected void syncData(){
+        SqliteHelper sqliteHelper = new SqliteHelper(this);
+        JSONObject jsonObject = jsonObjMaker(CONSTANTS.LAST_MODIFIED, getSharedPref(CONSTANTS.LAST_MODIFIED),
+                CONSTANTS.EMAIL, getSharedPref(CONSTANTS.EMAIL));
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.put(jsonObject);
+
+        jsonArrayReq(CONSTANTS.URL + CONSTANTS.SYNCDATA, jsonArray, new jsonArrayCallBack() {
+            @Override
+            public void onSuccess(JSONArray result) {
+                Log.d("jsonArray", result.toString());
+                Log.d("lastModified", getSharedPref(CONSTANTS.LAST_MODIFIED));
+
+                new Thread(() -> {
+                    for (int i = 0; i < result.length(); i++) {
+                        try {
+                            JSONObject jsonObject1 = result.getJSONObject(i);
+                            String title = jsonObject1.getString(CONSTANTS.DBTITLE);
+                            String body = jsonObject1.getString(CONSTANTS.DBBODY);
+                            String date = jsonObject1.getString(CONSTANTS.DBDATE);
+                            String id = jsonObject1.getString(CONSTANTS.DBID);
+
+                            Cursor cursor = sqliteHelper.getDataById(id);
+                            boolean exists = false;
+                            if (cursor != null) {
+                                exists = cursor.getCount() > 0;
+                                cursor.close();
+                            }
+
+                            if (exists) {
+                                sqliteHelper.updateData(title, body, date, id);
+                            } else {
+                                sqliteHelper.insertData(title, body, date, id);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    runOnUiThread(() -> {
+                        editSharedPref(CONSTANTS.LAST_MODIFIED, getDate());
+                        Toast.makeText(getApplicationContext(), "data synced", Toast.LENGTH_SHORT).show();
+                    });
+
+                }).start();
+            }
+        });
+    }
+
 
 
 
