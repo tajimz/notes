@@ -1,9 +1,14 @@
 package com.tajim.notes.utils;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -228,6 +233,19 @@ public abstract class BaseActivity extends AppCompatActivity {
                 }).start();
             }
         });
+    }
+
+    public void closeKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        view.clearFocus();
+    }
+
+
+    public void openKeyboard(EditText editText) {
+        editText.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
     }
 
 

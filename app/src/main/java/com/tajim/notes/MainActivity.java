@@ -2,6 +2,9 @@ package com.tajim.notes;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
 import android.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.tajim.notes.adapters.RecyclerAdapterMain;
@@ -23,6 +26,7 @@ public class MainActivity extends BaseActivity {
         initVars();
         setupRecycler();
         setupPopup();
+        handleSearch();
 
 
         binding.addNotes.setOnClickListener(v->{
@@ -61,6 +65,53 @@ public class MainActivity extends BaseActivity {
 
             });
             popupMenu.show();
+        });
+    }
+
+    private void handleSearch(){
+
+        binding.imageSearch.setOnClickListener(v->{
+
+
+            binding.tv.setVisibility(View.INVISIBLE);
+            binding.imageSearch.setVisibility(View.GONE);
+            binding.imageMore.setVisibility(View.GONE);
+            binding.searchView.setVisibility(View.VISIBLE);
+            binding.imageClose.setVisibility(View.VISIBLE);
+            openKeyboard(binding.searchView);
+
+
+
+        });
+
+        binding.imageClose.setOnClickListener(v->{
+            binding.tv.setVisibility(View.VISIBLE);
+            binding.imageSearch.setVisibility(View.VISIBLE);
+            binding.imageMore.setVisibility(View.VISIBLE);
+            binding.searchView.setVisibility(View.GONE);
+            binding.imageClose.setVisibility(View.INVISIBLE);
+            closeKeyboard(binding.searchView);
+            binding.searchView.setText("");
+
+        });
+
+
+
+        binding.searchView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
         });
     }
 
