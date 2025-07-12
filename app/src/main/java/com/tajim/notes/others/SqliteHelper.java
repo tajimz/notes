@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.tajim.notes.utils.CONSTANTS;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class SqliteHelper extends SQLiteOpenHelper {
     public SqliteHelper(Context context) {
@@ -40,10 +43,30 @@ public class SqliteHelper extends SQLiteOpenHelper {
 
     }
 
-    public Cursor getData (){
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        return sqLiteDatabase.rawQuery("SELECT * FROM "+CONSTANTS.NOTESTABLE+ " ORDER BY id DESC", null);
 
+
+    public ArrayList<HashMap<String,String>> getDataAsArray(String keyword){
+        ArrayList<HashMap<String,String>> arrayList = new ArrayList<>();
+        HashMap<String,String> hashMap;
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+CONSTANTS.NOTESTABLE+ " WHERE noteTitle LIKE '%"+keyword+"%'"+" OR noteBody LIKE '%"+keyword+"%'"+" ORDER BY id DESC", null);
+
+        while (cursor.moveToNext()){
+            String title = cursor.getString(1);
+            String body = cursor.getString(2);
+            String date = cursor.getString(3);
+            String id = cursor.getString(4);
+            hashMap = new HashMap<>();
+            hashMap.put(CONSTANTS.TITLE, title);
+            hashMap.put(CONSTANTS.BODY, body);
+            hashMap.put(CONSTANTS.DATE, date);
+            hashMap.put(CONSTANTS.DBID, id);
+
+            arrayList.add(hashMap);
+
+        }
+        cursor.close();
+        return arrayList;
     }
     public Cursor getDataById (String id){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();

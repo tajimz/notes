@@ -18,6 +18,7 @@ public class MainActivity extends BaseActivity {
     ActivityMainBinding binding;
     SqliteHelper sqliteHelper;
     RecyclerAdapterMain recyclerAdapterMain;
+    boolean search = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,26 +73,16 @@ public class MainActivity extends BaseActivity {
 
         binding.imageSearch.setOnClickListener(v->{
 
+            openSearch();
 
-            binding.tv.setVisibility(View.INVISIBLE);
-            binding.imageSearch.setVisibility(View.GONE);
-            binding.imageMore.setVisibility(View.GONE);
-            binding.searchView.setVisibility(View.VISIBLE);
-            binding.imageClose.setVisibility(View.VISIBLE);
-            openKeyboard(binding.searchView);
 
 
 
         });
 
         binding.imageClose.setOnClickListener(v->{
-            binding.tv.setVisibility(View.VISIBLE);
-            binding.imageSearch.setVisibility(View.VISIBLE);
-            binding.imageMore.setVisibility(View.VISIBLE);
-            binding.searchView.setVisibility(View.GONE);
-            binding.imageClose.setVisibility(View.INVISIBLE);
-            closeKeyboard(binding.searchView);
-            binding.searchView.setText("");
+
+            closeSearch();
 
         });
 
@@ -100,7 +91,8 @@ public class MainActivity extends BaseActivity {
         binding.searchView.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
-
+                String fullText = s.toString();
+                recyclerAdapterMain.filterData(sqliteHelper.getDataAsArray(fullText));
             }
 
             @Override
@@ -114,12 +106,37 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
+    private void closeSearch(){
+        search = false;
+        binding.tv.setVisibility(View.VISIBLE);
+        binding.imageSearch.setVisibility(View.VISIBLE);
+        binding.imageMore.setVisibility(View.VISIBLE);
+        binding.searchView.setVisibility(View.GONE);
+        binding.imageClose.setVisibility(View.INVISIBLE);
+        closeKeyboard(binding.searchView);
+        binding.searchView.setText("");
+        recyclerAdapterMain.filterData(sqliteHelper.getDataAsArray(""));
+    }
+    private void openSearch(){
+        search = true;
+        binding.tv.setVisibility(View.INVISIBLE);
+        binding.imageSearch.setVisibility(View.GONE);
+        binding.imageMore.setVisibility(View.GONE);
+        binding.searchView.setVisibility(View.VISIBLE);
+        binding.imageClose.setVisibility(View.VISIBLE);
+        openKeyboard(binding.searchView);
+    }
 
 
+    @Override
+    public void onBackPressed() {
 
-
-
-
+        if (search){
+            closeSearch();
+        }else {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     protected void onPostResume() {
@@ -127,4 +144,6 @@ public class MainActivity extends BaseActivity {
         recyclerAdapterMain.refreshData();
 
     }
+
+
 }

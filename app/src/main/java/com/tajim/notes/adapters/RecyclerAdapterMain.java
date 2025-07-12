@@ -17,14 +17,17 @@ import com.tajim.notes.notes.AddNoteActivity;
 import com.tajim.notes.others.SqliteHelper;
 import com.tajim.notes.utils.CONSTANTS;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class RecyclerAdapterMain extends RecyclerView.Adapter<RecyclerAdapterMain.ViewHolderMain> {
     SqliteHelper sqliteHelper;
-    Cursor cursor;
+    ArrayList<HashMap<String,String>> arrayList = new ArrayList<>();
     Context context;
     public RecyclerAdapterMain(Context context,SqliteHelper sqliteHelper){
         this.sqliteHelper = sqliteHelper;
         this.context = context;
-        cursor = sqliteHelper.getData();
+        arrayList = sqliteHelper.getDataAsArray("");
     }
     public class ViewHolderMain extends RecyclerView.ViewHolder{
         LayoutRecyclerMainBinding binding;
@@ -45,12 +48,13 @@ public class RecyclerAdapterMain extends RecyclerView.Adapter<RecyclerAdapterMai
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderMain holder, int position) {
-        cursor.moveToPosition(position);
 
-        String title = cursor.getString(1);
-        String body = cursor.getString(2);
-        String date = cursor.getString(3);
-        String id = cursor.getString(4);
+        HashMap<String, String> hashMap = arrayList.get(position);
+
+        String title = hashMap.get(CONSTANTS.TITLE);
+        String body =  hashMap.get(CONSTANTS.BODY);
+        String date =  hashMap.get(CONSTANTS.DATE);
+        String id =  hashMap.get(CONSTANTS.DBID);
 
         holder.binding.tvTitle.setText(title);
         holder.binding.tvBody.setText(convertDate(date) + " " + body);
@@ -70,16 +74,22 @@ public class RecyclerAdapterMain extends RecyclerView.Adapter<RecyclerAdapterMai
 
     @Override
     public int getItemCount() {
-        return cursor.getCount();
+        return arrayList.size();
     }
 
     public void refreshData() {
-        if (cursor != null && !cursor.isClosed()) {
-            cursor.close();
-        }
-        cursor = sqliteHelper.getData();
+        arrayList = new ArrayList<>();
+        arrayList = sqliteHelper.getDataAsArray("");
         notifyDataSetChanged();
+
     }
+
+    public void filterData(ArrayList<HashMap<String,String>> arrayList){
+        this.arrayList = arrayList;
+        notifyDataSetChanged();
+
+    }
+
 
 
 }
