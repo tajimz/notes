@@ -91,6 +91,12 @@ public class SqliteHelper extends SQLiteOpenHelper {
         sqLiteDatabase.update(CONSTANTS.NOTESTABLE, contentValues, "noteId = '" + noteId + "'", null);
     }
 
+    public void deleteNote (String noteId){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        sqLiteDatabase.rawQuery("DELETE FROM "+CONSTANTS.NOTESTABLE+" WHERE noteId LIKE '"+noteId+"'", null);
+
+    }
+
 
 
 

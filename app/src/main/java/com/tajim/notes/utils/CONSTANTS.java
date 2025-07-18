@@ -26,4 +26,5 @@ public class CONSTANTS {
     public static final String REASON = "reason";
     public static final String LAST_MODIFIED = "lastModified";
     public static final String SYNCDATA = "notes/getNoteLastModified.php";
+    public static final String DLTNOTE = "notes/deleteNote.php";
 }

@@ -13,4 +13,9 @@
         android:id="@+id/export_txt"
         android:title="Export As .txt"
         />
+
+    <item
+        android:id="@+id/delete_note"
+        android:title="Delete Note"
+        />
 </menu>

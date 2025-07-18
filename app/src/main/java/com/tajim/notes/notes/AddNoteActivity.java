@@ -2,6 +2,7 @@ package com.tajim.notes.notes;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 import com.tajim.notes.MainActivity;
@@ -18,6 +19,7 @@ import org.json.JSONObject;
 public class AddNoteActivity extends BaseActivity {
     ActivityAddNoteBinding binding;
     private NoteExporter noteExporter;
+    SqliteHelper sqliteHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,8 @@ public class AddNoteActivity extends BaseActivity {
         binding = ActivityAddNoteBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         noteExporter = new NoteExporter(this);
+        sqliteHelper = new SqliteHelper(this);
+
         binding.tvDate.setText(convertDate(getDate()));
         checkReason();
         setupPopup();
@@ -36,6 +40,7 @@ public class AddNoteActivity extends BaseActivity {
         String reason = getIntent().getStringExtra(CONSTANTS.REASON);
         if (CONSTANTS.ADDNOTE_URL.equals(reason)){
             handleSubmit();
+            binding.imageMore.setVisibility(View.INVISIBLE);
         }else if(CONSTANTS.EDITNOTE_URL.equals(reason)){
 
             handleEdit();
@@ -181,6 +186,9 @@ public class AddNoteActivity extends BaseActivity {
                 noteExporter.export(binding.edBody.getText().toString().trim(), "txt", binding.edTitle.getText().toString().trim());
 
                 return true;
+            }else if (itemId == R.id.delete_note){
+                deleteNote(getIntent().getStringExtra(CONSTANTS.DBID));
+
             }
             return false;
         });
@@ -188,6 +196,30 @@ public class AddNoteActivity extends BaseActivity {
 
         });
 
+    }
+
+    private void deleteNote(String noteId){
+        JSONObject jsonObject = jsonObjMaker(CONSTANTS.DBID, noteId);
+
+        reqJsonObj(CONSTANTS.URL+CONSTANTS.DLTNOTE, jsonObject, new jsonObjCallBack() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                try {
+                    String status = result.getString("status");
+                    if (status.equals("success")) {
+                        sqliteHelper.deleteNote(noteId);
+                        startActivity(new Intent(AddNoteActivity.this, MainActivity.class));
+                        finish();
+                        Toast.makeText(getApplicationContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
+
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+
+            }
+        });
     }
 
 
