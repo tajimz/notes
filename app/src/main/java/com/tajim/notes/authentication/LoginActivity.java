@@ -106,8 +106,12 @@ public class LoginActivity extends BaseActivity {
                         String body = jsonObject1.getString(CONSTANTS.DBBODY);
                         String date = jsonObject1.getString(CONSTANTS.DBDATE);
                         String id = jsonObject1.getString(CONSTANTS.DBID);
+                        String deleted = jsonObject1.getString("noteDeleted");
                         new Thread(() -> {
-                            sqliteHelper.insertData(title, body, date, id);
+                            if (!deleted.equals("true")){
+                                sqliteHelper.insertData(title, body, date, id);
+                            }
+
                         }).start();
                         
                     } catch (JSONException e) {
