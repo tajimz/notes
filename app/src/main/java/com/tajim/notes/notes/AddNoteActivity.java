@@ -199,7 +199,8 @@ public class AddNoteActivity extends BaseActivity {
     }
 
     private void deleteNote(String noteId){
-        JSONObject jsonObject = jsonObjMaker(CONSTANTS.DBID, noteId);
+        JSONObject jsonObject = jsonObjMaker(CONSTANTS.DBID, noteId,
+                CONSTANTS.DATE, getDate());
 
         reqJsonObj(CONSTANTS.URL+CONSTANTS.DLTNOTE, jsonObject, new jsonObjCallBack() {
             @Override

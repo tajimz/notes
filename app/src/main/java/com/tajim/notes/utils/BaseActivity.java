@@ -205,6 +205,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                             String body = jsonObject1.getString(CONSTANTS.DBBODY);
                             String date = jsonObject1.getString(CONSTANTS.DBDATE);
                             String id = jsonObject1.getString(CONSTANTS.DBID);
+                            String deleted = jsonObject1.getString("noteDeleted");
+
 
                             Cursor cursor = sqliteHelper.getDataById(id);
                             boolean exists = false;
@@ -214,9 +216,17 @@ public abstract class BaseActivity extends AppCompatActivity {
                             }
 
                             if (exists) {
-                                sqliteHelper.updateData(title, body, date, id);
+                                if (!deleted.equals("true")){
+                                    sqliteHelper.updateData(title, body, date, id);
+                                }else {
+                                    sqliteHelper.deleteNote(id);
+                                }
+
                             } else {
-                                sqliteHelper.insertData(title, body, date, id);
+                                if (!deleted.equals("true")){
+                                    sqliteHelper.insertData(title, body, date, id);
+                                }
+
                             }
 
                         } catch (JSONException e) {
