@@ -43,4 +43,6 @@ dependencies {
     androidTestImplementation libs.espresso.core
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'org.apache.poi:poi-ooxml:5.2.3'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
 }
