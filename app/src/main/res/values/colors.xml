@@ -4,4 +4,6 @@
     <color name="blakish">#565656</color>
     <color name="white">#FFFFFFFF</color>
     <color name="sky_blue">#2196F3</color>
+    <color name="themeBlue">#2d69e3</color>
+    <color name="gray">#f6f8fa</color>
 </resources>

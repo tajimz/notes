@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
+
 import com.tajim.notes.MainActivity;
 import com.tajim.notes.databinding.ActivityLoginBinding;
 import com.tajim.notes.others.SqliteHelper;
@@ -24,6 +26,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         sqliteHelper   = new SqliteHelper(this);
