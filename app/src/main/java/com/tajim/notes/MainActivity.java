@@ -1,6 +1,7 @@
 package com.tajim.notes;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.tajim.notes.adapters.RecyclerAdapterMain;
 import com.tajim.notes.databinding.ActivityMainBinding;
 import com.tajim.notes.notes.AddNoteActivity;
+import com.tajim.notes.others.SplashActivity;
 import com.tajim.notes.others.SqliteHelper;
 import com.tajim.notes.utils.BaseActivity;
 import com.tajim.notes.utils.CONSTANTS;
@@ -64,6 +66,15 @@ public class MainActivity extends BaseActivity {
                     });
 
                     return true;
+                }else if (id == R.id.privacyPolicy){
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://trtajim.xyz/apps/notes/agreements/privacyPolicy.html")));
+                    return true;
+                }else if (id == R.id.termsConditions){
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://trtajim.xyz/apps/notes/agreements/termsConditions.html")));
+                    return true;
+                }else if (id == R.id.logOut){
+                    logOut();
+
                 }
                 return false;
 
@@ -128,6 +139,15 @@ public class MainActivity extends BaseActivity {
         binding.searchView.setVisibility(View.VISIBLE);
         binding.imageClose.setVisibility(View.VISIBLE);
         openKeyboard(binding.searchView);
+    }
+
+    private void logOut (){
+        alert("Log Out? ", "Are you sure you want to log out? Your data will be securely saved to the cloud. You'll need to log in again to continue. Click OK to proceed.", ()->{
+
+            editSharedPref(CONSTANTS.EMAIL, null);
+            sqliteHelper.clearData();
+            startActivity(new Intent(this, SplashActivity.class));
+        });
     }
 
 

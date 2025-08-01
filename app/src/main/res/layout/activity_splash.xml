@@ -24,6 +24,7 @@
         app:civ_border_color="#FF000000" />
 
     <TextView
+        android:id="@+id/tvsp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
@@ -32,6 +33,18 @@
         app:layout_constraintTop_toBottomOf="@+id/img_splash"
         android:layout_marginTop="10dp"
         android:textSize="25dp"/>
+
+    <TextView
+        android:id="@+id/tvdetails"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvsp"
+        android:text="Signing in as example@gmail.com..."
+        android:gravity="center_horizontal"
+        android:textSize="13dp"
+        android:layout_marginTop="10dp"/>
+
 
     <ProgressBar
         android:id="@+id/infiniteProgressBar"

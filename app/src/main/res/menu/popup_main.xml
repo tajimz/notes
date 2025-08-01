@@ -5,4 +5,16 @@
         android:id="@+id/sync"
         android:title="Sync Notes"
         />
+    <item
+        android:id="@+id/privacyPolicy"
+        android:title="Privacy Policy"
+        />
+    <item
+        android:id="@+id/termsConditions"
+        android:title="Terms and Conditions"
+        />
+    <item
+        android:id="@+id/logOut"
+        android:title="Log Out"
+        />
 </menu>
