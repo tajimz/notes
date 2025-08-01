@@ -1,5 +1,7 @@
 package com.tajim.notes.adapters;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static com.tajim.notes.utils.BaseActivity.convertDate;
 
 import android.content.Context;
@@ -12,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tajim.notes.MainActivity;
+import com.tajim.notes.databinding.ActivityMainBinding;
 import com.tajim.notes.databinding.LayoutRecyclerMainBinding;
 import com.tajim.notes.notes.AddNoteActivity;
 import com.tajim.notes.others.SqliteHelper;
@@ -24,10 +27,14 @@ public class RecyclerAdapterMain extends RecyclerView.Adapter<RecyclerAdapterMai
     SqliteHelper sqliteHelper;
     ArrayList<HashMap<String,String>> arrayList = new ArrayList<>();
     Context context;
-    public RecyclerAdapterMain(Context context,SqliteHelper sqliteHelper){
+    ActivityMainBinding activityMainBinding;
+    public RecyclerAdapterMain(Context context,SqliteHelper sqliteHelper, ActivityMainBinding activityMainBinding){
         this.sqliteHelper = sqliteHelper;
+        this.activityMainBinding = activityMainBinding;
         this.context = context;
         arrayList = sqliteHelper.getDataAsArray("");
+        if (arrayList.isEmpty()) activityMainBinding.tvEmpty.setVisibility(VISIBLE);
+        else activityMainBinding.tvEmpty.setVisibility(GONE);
     }
     public class ViewHolderMain extends RecyclerView.ViewHolder{
         LayoutRecyclerMainBinding binding;
@@ -80,6 +87,8 @@ public class RecyclerAdapterMain extends RecyclerView.Adapter<RecyclerAdapterMai
     public void refreshData() {
         arrayList = new ArrayList<>();
         arrayList = sqliteHelper.getDataAsArray("");
+        if (arrayList.isEmpty()) activityMainBinding.tvEmpty.setVisibility(VISIBLE);
+        else activityMainBinding.tvEmpty.setVisibility(GONE);
         notifyDataSetChanged();
 
     }

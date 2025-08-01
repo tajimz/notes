@@ -6,6 +6,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.PopupMenu;
+
+import androidx.activity.EdgeToEdge;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.tajim.notes.adapters.RecyclerAdapterMain;
 import com.tajim.notes.databinding.ActivityMainBinding;
@@ -22,6 +24,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         initVars();
@@ -41,7 +44,7 @@ public class MainActivity extends BaseActivity {
 
     private void initVars(){
         sqliteHelper = new SqliteHelper(this);
-        recyclerAdapterMain = new RecyclerAdapterMain(MainActivity.this,sqliteHelper);
+        recyclerAdapterMain = new RecyclerAdapterMain(MainActivity.this,sqliteHelper, binding);
     }
     private void setupRecycler(){
         binding.recyclerMain.setAdapter(recyclerAdapterMain);

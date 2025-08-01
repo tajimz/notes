@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
+
 import com.tajim.notes.MainActivity;
 import com.tajim.notes.databinding.ActivitySignupBinding;
 import com.tajim.notes.utils.BaseActivity;
@@ -19,6 +21,7 @@ public class SignupActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
 
         binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
