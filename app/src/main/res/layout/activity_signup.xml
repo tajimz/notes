@@ -6,121 +6,220 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".authentication.SignupActivity"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="@color/gray"
+    >
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        >
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/guideOne"
+        android:background="@color/themeBlue"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_splash"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        app:civ_border_width="0.5dp"
+        app:civ_border_color="#FF000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideTwo"
+        android:layout_marginBottom="50dp"
+        />
+
+
     <TextView
-        android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:text="Sign Up"
-        android:textStyle="bold"
-        android:textSize="25dp"
-
-        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edLayEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:hint="Email"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:lineSpacingExtra="1dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/img_splash"
         android:layout_marginTop="10dp"
-
-
-        app:layout_constraintTop_toBottomOf="@id/tv"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edEmail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edLayPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        app:layout_constraintTop_toBottomOf="@+id/edLayEmail"
-
-        android:hint="password"
-        app:passwordToggleEnabled="true"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-
-            android:id="@+id/edPassword"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edLayHint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            app:layout_constraintTop_toBottomOf="@+id/edLayPassword"
-
-            android:hint="password hint"
-            app:passwordToggleEnabled="true"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-
-                android:id="@+id/edHint"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
-        <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnSubmit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-
-        app:layout_constraintTop_toBottomOf="@+id/edLayHint"
-
-        android:text="Sign Up"
-        app:cornerRadius="5dp"
-
-
 
         />
 
-    <TextView
-        android:id="@+id/tvLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Already have an account ? Log In"
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideTwo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideThree"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9"/>
 
-        app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <TextView
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideOne"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideFour"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideFive"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/guideTwo"
+        app:layout_constraintBottom_toTopOf="@id/guideThree"
+        app:layout_constraintStart_toEndOf="@id/guideFour"
+        app:layout_constraintEnd_toStartOf="@id/guideFive"
+        android:elevation="10dp"
+        app:cardCornerRadius="10dp">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="*The password cannot be reset. You can request for the hint in the future, which will be sent to your email."
+            android:orientation="vertical"
+            android:padding="10dp">
 
-            app:layout_constraintTop_toBottomOf="@id/btnSubmit"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sign Up"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Email">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edEmail"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="10dp"
+                android:hint="password"
+                app:passwordToggleEnabled="true"
+
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edPassword"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="10dp"
+                android:hint="Password Hint"
+                app:passwordToggleEnabled="true"
+
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edHint"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvForgot"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="*Password reset is not available. You can request a password hint instead."
+                android:gravity="left"
+                android:textColor="@color/themeBlue"
+                android:layout_marginTop="10dp"
+                android:textSize="12dp"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSubmit"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cornerRadius="5dp"
+                android:text="Sign Up"
+                android:backgroundTint="@color/themeBlue"
+
+                android:layout_marginTop="10dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal"
+
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentBottom="true"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Already have an account ? "/>
+                    <TextView
+                        android:id="@+id/tvLogin"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sign In"
+                        android:textStyle="bold"
+                        android:textColor="@color/themeBlue"/>
+
+                </LinearLayout>
+            </RelativeLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
