@@ -4,6 +4,9 @@ import static android.view.View.VISIBLE;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.activity.EdgeToEdge;
+
 import com.tajim.notes.MainActivity;
 import com.tajim.notes.R;
 import com.tajim.notes.authentication.LoginActivity;
@@ -19,6 +22,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         sqliteHelper = new SqliteHelper(this);

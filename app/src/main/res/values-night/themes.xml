@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Notes" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <item name="android:background">@color/gray</item>
+
 
 
     </style>
