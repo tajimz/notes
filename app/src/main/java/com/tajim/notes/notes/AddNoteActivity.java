@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
+
 import com.tajim.notes.MainActivity;
 import com.tajim.notes.R;
 import com.tajim.notes.databinding.ActivityAddNoteBinding;
@@ -24,12 +27,14 @@ public class AddNoteActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         binding = ActivityAddNoteBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         noteExporter = new NoteExporter(this);
         sqliteHelper = new SqliteHelper(this);
 
         binding.tvDate.setText(convertDate(getDate()));
+        binding.imageBack.setOnClickListener(v->{super.onBackPressed();});
         checkReason();
         setupPopup();
 
@@ -70,7 +75,6 @@ public class AddNoteActivity extends BaseActivity {
         binding.tvDate.setText("Last Modified: "+convertDate(date));
         binding.edTitle.setText(title);
         binding.edBody.setText(body);
-        binding.btnSubmit.setText("Edit Note");
 
         binding.btnSubmit.setOnClickListener(v->{
             String editedTitle = binding.edTitle.getText().toString().trim();

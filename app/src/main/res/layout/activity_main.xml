@@ -8,7 +8,7 @@
     tools:context=".MainActivity"
 
     android:fitsSystemWindows="true"
-    android:backgroundTint="@color/white">
+    android:background="@color/white">
 
 
 
