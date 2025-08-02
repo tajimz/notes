@@ -43,7 +43,7 @@ public class SignupActivity extends BaseActivity {
                     CONSTANTS.PASSWORD, password
             );
 
-            reqJsonObj(CONSTANTS.URL + CONSTANTS.SIGNUP_URL, jsonObject, new jsonObjCallBack() {
+            reqJsonObj(false, CONSTANTS.URL + CONSTANTS.SIGNUP_URL, jsonObject, new jsonObjCallBack() {
                 @Override
                 public void onSuccess(JSONObject result) {
                     try {

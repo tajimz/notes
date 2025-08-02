@@ -104,7 +104,7 @@ public class AddNoteActivity extends BaseActivity {
                 CONSTANTS.DATE, date
         );
 
-        reqJsonObj(CONSTANTS.URL + CONSTANTS.ADDNOTE_URL, jsonObject, new jsonObjCallBack() {
+        reqJsonObj(false, CONSTANTS.URL + CONSTANTS.ADDNOTE_URL, jsonObject, new jsonObjCallBack() {
             @Override
             public void onSuccess(JSONObject result) {
 
@@ -133,7 +133,7 @@ public class AddNoteActivity extends BaseActivity {
                 CONSTANTS.DBID, id
         );
 
-        reqJsonObj(CONSTANTS.URL + CONSTANTS.EDITNOTE_URL, jsonObject, new jsonObjCallBack() {
+        reqJsonObj(false, CONSTANTS.URL + CONSTANTS.EDITNOTE_URL, jsonObject, new jsonObjCallBack() {
             @Override
             public void onSuccess(JSONObject result) {
 
@@ -206,7 +206,7 @@ public class AddNoteActivity extends BaseActivity {
         JSONObject jsonObject = jsonObjMaker(CONSTANTS.DBID, noteId,
                 CONSTANTS.DATE, getDate());
 
-        reqJsonObj(CONSTANTS.URL+CONSTANTS.DLTNOTE, jsonObject, new jsonObjCallBack() {
+        reqJsonObj(false, CONSTANTS.URL+CONSTANTS.DLTNOTE, jsonObject, new jsonObjCallBack() {
             @Override
             public void onSuccess(JSONObject result) {
                 try {

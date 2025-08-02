@@ -52,7 +52,7 @@ public class LoginActivity extends BaseActivity {
                     CONSTANTS.PASSWORD, password
             );
 
-            reqJsonObj(CONSTANTS.URL + CONSTANTS.LOGIN_URL, jsonObject, new jsonObjCallBack() {
+            reqJsonObj(false, CONSTANTS.URL + CONSTANTS.LOGIN_URL, jsonObject, new jsonObjCallBack() {
                 @Override
                 public void onSuccess(JSONObject result) {
 
@@ -98,7 +98,7 @@ public class LoginActivity extends BaseActivity {
         JSONObject jsonObject = jsonObjMaker(CONSTANTS.EMAIL, email);
         jsonArray.put(jsonObject);
 
-        jsonArrayReq(CONSTANTS.URL + CONSTANTS.GET_EXISTING_NOTES, jsonArray, new jsonArrayCallBack() {
+        jsonArrayReq(false, CONSTANTS.URL + CONSTANTS.GET_EXISTING_NOTES, jsonArray, new jsonArrayCallBack() {
             @Override
             public void onSuccess(JSONArray result) {
 

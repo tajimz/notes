@@ -51,9 +51,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         new Handler().postDelayed(toRun, timeInMS);
     }
 
-    protected void reqJsonObj(String url, JSONObject jsonObject, final jsonObjCallBack jsonCallBack){
+    protected void reqJsonObj(Boolean silent, String url, JSONObject jsonObject, final jsonObjCallBack jsonCallBack){
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        startLoading();
+        if (!silent) startLoading();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -76,9 +76,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
-    protected void jsonArrayReq(String url, JSONArray jsonArray, final jsonArrayCallBack jsonArrayCallBack){
+    protected void jsonArrayReq(Boolean silent, String url, JSONArray jsonArray, final jsonArrayCallBack jsonArrayCallBack){
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        startLoading();
+        if (!silent) startLoading();
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, url, jsonArray, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
@@ -191,7 +191,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         JSONArray jsonArray = new JSONArray();
         jsonArray.put(jsonObject);
 
-        jsonArrayReq(CONSTANTS.URL + CONSTANTS.SYNCDATA, jsonArray, new jsonArrayCallBack() {
+        jsonArrayReq(true, CONSTANTS.URL + CONSTANTS.SYNCDATA, jsonArray, new jsonArrayCallBack() {
             @Override
             public void onSuccess(JSONArray result) {
                 Log.d("jsonArray", result.toString());
