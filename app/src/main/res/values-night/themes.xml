@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Notes" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your dark theme here. -->
-
+        <item name="fontFamily">@font/poppins_reg</item>
 
 
     </style>

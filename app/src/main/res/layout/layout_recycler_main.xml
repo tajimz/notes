@@ -20,6 +20,8 @@
             android:textStyle="bold"
             android:maxLines="1"
             android:ellipsize="end"
+            android:fontFamily="@font/roboto_reg"
+
             />
         <LinearLayout
             android:layout_width="match_parent"
