@@ -26,7 +26,7 @@ public class SplashActivity extends BaseActivity {
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         sqliteHelper = new SqliteHelper(this);
-        endSplash(2000);
+        endSplash(1000);
 
 
 
@@ -39,14 +39,17 @@ public class SplashActivity extends BaseActivity {
 
             syncData(()->{});
         }
-        delayTime(delayTimeInMS, () -> {
-            if (getSharedPref(CONSTANTS.EMAIL) != null) {
+        checkVersion(()->{
+            delayTime(delayTimeInMS, () -> {
+                if (getSharedPref(CONSTANTS.EMAIL) != null) {
 
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            } else {
-                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-            }
-            finish();
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                } else {
+                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                }
+                finish();
+            });
         });
+
     }
 }

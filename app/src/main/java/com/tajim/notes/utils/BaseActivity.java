@@ -2,8 +2,13 @@ package com.tajim.notes.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -36,22 +41,23 @@ import java.util.Locale;
 public abstract class BaseActivity extends AppCompatActivity {
 
 
-    protected String getSharedPref(String keyword){
+    protected String getSharedPref(String keyword) {
         SharedPreferences sharedPreferences = getSharedPreferences(CONSTANTS.SHAREDPREF, MODE_PRIVATE);
         return sharedPreferences.getString(keyword, null);
     }
 
-    protected void editSharedPref(String keyword, String value){
+    protected void editSharedPref(String keyword, String value) {
         SharedPreferences sharedPreferences = getSharedPreferences(CONSTANTS.SHAREDPREF, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(keyword, value);
         editor.apply();
     }
-    protected void delayTime (int timeInMS, Runnable toRun){
+
+    protected void delayTime(int timeInMS, Runnable toRun) {
         new Handler().postDelayed(toRun, timeInMS);
     }
 
-    protected void reqJsonObj(Boolean silent, String url, JSONObject jsonObject, final jsonObjCallBack jsonCallBack){
+    protected void reqJsonObj(Boolean silent, String url, JSONObject jsonObject, final jsonObjCallBack jsonCallBack) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         if (!silent) startLoading();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
@@ -66,7 +72,9 @@ public abstract class BaseActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError volleyError) {
 
                 Log.e("volleyError", volleyError.toString());
-                alert("Internet Connection Error", "Maybe you're offline or using a weak connection", ()->{endLoading();});
+                alert("Internet Connection Error", "Maybe you're offline or using a weak connection", () -> {
+                    endLoading();
+                });
 
 
             }
@@ -76,7 +84,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
-    protected void jsonArrayReq(Boolean silent, String url, JSONArray jsonArray, final jsonArrayCallBack jsonArrayCallBack){
+    protected void jsonArrayReq(Boolean silent, String url, JSONArray jsonArray, final jsonArrayCallBack jsonArrayCallBack) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         if (!silent) startLoading();
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, url, jsonArray, new Response.Listener<JSONArray>() {
@@ -91,11 +99,14 @@ public abstract class BaseActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError volleyError) {
 
                 Log.e("volleyError", volleyError.toString());
-                alert("Internet Connection Error", "Maybe you're offline or using a weak connection", ()->{endLoading();});
+                alert("Internet Connection Error", "Maybe you're offline or using a weak connection", () -> {
+                    endLoading();
+                });
             }
         });
         requestQueue.add(jsonArrayRequest);
     }
+
     AlertDialog loadingAlert;
 
     protected void startLoading() {
@@ -113,8 +124,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         loadingAlert = dialog;
     }
 
-    protected void endLoading(){
-        if (loadingAlert != null && loadingAlert.isShowing()){
+    protected void endLoading() {
+        if (loadingAlert != null && loadingAlert.isShowing()) {
             loadingAlert.dismiss();
         }
     }
@@ -124,7 +135,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMessage(body)
-                .setNegativeButton("Okay", (dialog, which) -> {runnable.run();})
+                .setNegativeButton("Okay", (dialog, which) -> {
+                    runnable.run();
+                })
                 .show();
     }
 
@@ -160,8 +173,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         return jsonObject;
     }
 
-    protected boolean isPassword(String password){
-        return password.length() >= 8 && password.length() <= 16 ;
+    protected boolean isPassword(String password) {
+        return password.length() >= 8 && password.length() <= 16;
     }
 
     protected static String getDate() {
@@ -183,8 +196,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-
-    protected void syncData(Runnable runnable){
+    protected void syncData(Runnable runnable) {
         SqliteHelper sqliteHelper = new SqliteHelper(this);
         JSONObject jsonObject = jsonObjMaker(CONSTANTS.LAST_MODIFIED, getSharedPref(CONSTANTS.LAST_MODIFIED),
                 CONSTANTS.EMAIL, getSharedPref(CONSTANTS.EMAIL));
@@ -216,14 +228,14 @@ public abstract class BaseActivity extends AppCompatActivity {
                             }
 
                             if (exists) {
-                                if (!deleted.equals("true")){
+                                if (!deleted.equals("true")) {
                                     sqliteHelper.updateData(title, body, date, id);
-                                }else {
+                                } else {
                                     sqliteHelper.deleteNote(id);
                                 }
 
                             } else {
-                                if (!deleted.equals("true")){
+                                if (!deleted.equals("true")) {
                                     sqliteHelper.insertData(title, body, date, id);
                                 }
 
@@ -258,11 +270,46 @@ public abstract class BaseActivity extends AppCompatActivity {
         imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
     }
 
+    protected void checkVersion(Runnable runnable) {
+        reqJsonObj(true, CONSTANTS.URL + "authentication/version.json", null, new jsonObjCallBack() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                try {
+                    String version = result.getString("version");
+                    String appversion = getAppVersion();
+                    if (!version.equals(appversion)) {
+                        String message = result.getString("message");
+                        String link = result.getString("link");
+                        new AlertDialog.Builder(BaseActivity.this).setTitle("Update Available").setMessage(message).setCancelable(false).setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
+                            }
+                        }).show();
+
+                    } else {
+                        runnable.run();
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
 
 
+            }
+        });
+    }
+
+    protected String getAppVersion() {
+        String toReturn = "";
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            toReturn =  pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+
+        }
+        return toReturn;
 
 
-
-
-
+    }
 }
